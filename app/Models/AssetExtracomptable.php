@@ -173,14 +173,14 @@ class AssetExtracomptable extends ArchiveableModel
 
     public function qrcode()
     {
-        $textRuangLantai = ($this->ruang ? $this->ruang->nama_ruang : '') . ' / Test Lt. ' . $this->lantai;
+        $textRuangLantai = ($this->ruang ? $this->ruang->nama_ruang : '') . ' / Lt. ' . $this->lantai;
         $textGedung = $this->gedung ? $this->gedung->nama : '';
         return QrcodeAsset::make($this->kd_asset, [
             'name' => $this->nama_asset,
             'location' => $this->getLocation(),
             'texts' => [
                 $textRuangLantai,
-                $textGedung,
+                $textGedung
             ],
             'directory' => 'extracomptable',
         ]);
