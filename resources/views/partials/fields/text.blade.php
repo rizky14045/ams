@@ -1,0 +1,50 @@
+@php
+$id = "input-{$name}";
+$label = isset($label)? $label : ucwords(snake_case(camel_case($name), ' '));
+$required = isset($required)? (bool) $required : false;
+$readonly = isset($readonly)? (bool) $readonly : false;
+$autofocus = isset($autofocus)? (bool) $autofocus : false;
+@endphp
+
+<div class="form-group {{ $errors->has($name)? 'has-error' : '' }}">
+  <label class="control-label col-lg-2 col-md-3 col-sm-4" for="{{ $id }}">
+    {{ $label }}
+    @if($required)
+    <strong class="text-danger">*</strong>
+    @endif
+  </label>
+  <div class="col-lg-10 col-md-9 col-sm-8">
+    @if(!isset($groupLeft) AND !isset($groupRight))
+    <input
+      type="text"
+      class="form-control"
+      value="{{ $value or '' }}"
+      name="{{ $name }}"
+      id="{{ $id }}"
+      {{ $autofocus? 'autofocus' : '' }}
+      {{ $required? 'required' : '' }}
+      {{ $readonly? 'readonly' : '' }}
+    />
+    @else
+    <div class="input-group">
+      {!! $groupLeft or '' !!}
+      <input
+        type="text"
+        class="form-control"
+        value="{{ $value or '' }}"
+        name="{{ $name }}"
+        id="{{ $id }}"
+        {{ $required? 'required' : '' }}
+        {{ $readonly? 'readonly' : '' }}
+      />
+      {!! $groupRight or '' !!}
+    </div>
+    @endif
+    @if($errors->has($name))
+    <div class="help-block">{{ $errors->first($name) }}</div>
+    @endif
+    @if(isset($help))
+    <div class="help-block">{{ $help }}</div>
+    @endif
+  </div>
+</div>

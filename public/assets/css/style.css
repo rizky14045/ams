@@ -1,0 +1,46 @@
+.datagrid .form-inline {
+  display: inline-block;
+}
+
+.datagrid thead th,
+.datagrid tfoot th {
+  background: #f7f7f7;
+  border: 1px solid #ddd !important;
+  border-bottom-width: 2px !important;
+}
+
+.datagrid .empty-message {
+  padding: 30px;
+  font-size: 24px;
+  color: #aaa;
+  text-align: center;
+}
+
+.viewport-wrapper {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  padding: 10px;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0px 0px 25px 0px rgba(0,0,0,.2);
+  display: none;
+}
+
+.viewport-wrapper .viewport {
+  position: relative;
+  width: 300px;
+  height: 200px;
+}
+
+.viewport-wrapper .viewport > video,
+.viewport-wrapper .viewport > canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.viewport-wrapper.active {
+  display: block;
+  box-shadow: 0px 0px 25px 0px rgba(0,0,0,.5);
+}
