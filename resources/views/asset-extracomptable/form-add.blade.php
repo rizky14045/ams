@@ -109,6 +109,13 @@
         'label' => 'Foto Barang',
       ])
 
+      @include('partials.fields.text', [
+        'name' => 'rfid',
+        'value' => prev_input('rfid'),
+        'required' => true,
+        'label' => 'RFID',
+      ])
+
       <hr>
 
       {{-- @include('partials.fields.select2', [

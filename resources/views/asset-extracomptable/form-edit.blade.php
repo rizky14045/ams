@@ -103,9 +103,16 @@
       @include('partials.fields.image', [
         'name' => 'gambar',
         'value' => $asset->gambar,
-        'required' => true,
+        'required' => false,
         'label' => 'Foto Barang',
       ])
+      @include('partials.fields.text', [
+        'name' => 'rfid',
+        'value' => $asset->rfid,
+        'required' => true,
+        'label' => 'RFID',
+      ])
+
 
       <hr>
 

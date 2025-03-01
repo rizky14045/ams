@@ -280,6 +280,7 @@ class AssetExtracomptableController extends Controller
                 'nama_asset' => $asset->nama_asset,
                 'tgl_masuk' => $asset->tgl_masuk,
                 'status' => $asset->status,
+                'rfid' => $asset->rfid,
             ]);
         } else {
             return redirect()->route('AdminAssetExtracomptableControllerGetIndex');
@@ -306,6 +307,8 @@ class AssetExtracomptableController extends Controller
             return $status['value'];
         }, config('asset.status_extracomptable'));
 
+        $imageReq = $is_edit == false ? 'required|image' : 'image';
+        
         $this->validate($req, [
             'id_gedung' => 'required|exists:gedung,id',
             'lantai' => 'required',
@@ -316,15 +319,19 @@ class AssetExtracomptableController extends Controller
             'nama_asset' => 'required',
             'tgl_masuk' => 'required|date',
             'status' => 'required|in:'.implode(',', $list_status),
-            'gambar' => 'required|image',
+            'gambar' => $imageReq,
+            'rfid' => 'required|string',
             // 'ref_id_request' => '',
         ]);
 
-        $path = public_path('uploads/assets-extracomptable');
-        $gambar = $req->file('gambar');
-        $ext = $gambar->getClientOriginalExtension();
-        $filename = implode('-', [md5($req->get('kd_asset')), date('ymd'), uniqid()]).'.'.$ext;
-        $gambar->move($path, $filename);
+        $filename = null;
+        if($req->exists('gambar')){
+            $path = public_path('uploads/assets-extracomptable');
+            $gambar = $req->file('gambar');
+            $ext = $gambar->getClientOriginalExtension();
+            $filename = implode('-', [md5($req->get('kd_asset')), date('ymd'), uniqid()]).'.'.$ext;
+            $gambar->move($path, $filename);
+        }
 
         $asset->id_gedung = $req->get('id_gedung');
         $asset->lantai = $req->get('lantai');
@@ -335,8 +342,9 @@ class AssetExtracomptableController extends Controller
         $asset->nama_asset = $req->get('nama_asset');
         $asset->tgl_masuk = $req->get('tgl_masuk');
         $asset->status = $req->get('status');
-        $asset->gambar = $filename;
+        $asset->gambar = $filename ?? $asset->gambar;
         $asset->ref_id_request = $req->get('ref_id_request') ?: null;
+        $asset->rfid = $req->get('rfid');
         $saved = $asset->save();
 
         if ($saved) {

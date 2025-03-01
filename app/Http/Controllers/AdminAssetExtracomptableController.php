@@ -49,6 +49,7 @@ use App\Traits\GetMasterOptions;
 			$this->col[] = ["label"=>"Jenis","name"=>"id_jenis","join"=>"jenis_extracomptable,nama"];
 			$this->col[] = ["label"=>"Subjenis","name"=>"id_subjenis","join"=>"subjenis_extracomptable,nama"];
             $this->col[] = ["label"=>"Nama Asset","name"=>"nama_asset"];
+            $this->col[] = ["label"=>"RFID","name"=>"rfid"];
             $this->col[] = [
                 "label" => "Status",
                 "name" => "status",
